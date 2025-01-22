@@ -21,7 +21,6 @@ class CalculateBMIViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func heightSliderChanged(_ sender: UISlider) {
@@ -37,21 +36,16 @@ class CalculateBMIViewController: UIViewController {
     }
     
     @IBAction func calculateButtonPressed(_ sender: UIButton) {
-        
-        
         let height = heightSlider.value
         let weight = weightSlider.value
         
         if height <= 0 || weight <= 0 {
-            // alert
-            // Create an alert
               let alert = UIAlertController(
                   title: "Invalid Input",
                   message: "Height and Weight must be greater than 0.",
                   preferredStyle: .alert
               )
               
-           
               alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
               
               self.present(alert, animated: true, completion: nil)
