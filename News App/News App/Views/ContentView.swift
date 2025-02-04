@@ -15,13 +15,16 @@ struct ContentView: View {
         NavigationView {
             List(networkManager.posts, rowContent: {
                 post in
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("\(post.points ?? 0)")
+                NavigationLink(destination: DetailView(url: post.url)) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("\(post.points ?? 0)").font(.caption).fontWeight(.bold).lineLimit(2)
+                        
                         Text(post.title ?? "").font(.headline)
+                        
+                        Text(post.url ?? "").font(.subheadline).foregroundColor(.blue).lineLimit(1).underline(true, color: .blue)
                     }
-                    Text(post.url ?? "")
                 }
+               
                 
             }).navigationTitle("News App")
         }.onAppear() {
@@ -30,11 +33,7 @@ struct ContentView: View {
             }
         }
         
-        Button("Fetch", action: {
-            Task {
-                await networkManager.fetchData()
-            }
-        })
+        
     }
 }
 
