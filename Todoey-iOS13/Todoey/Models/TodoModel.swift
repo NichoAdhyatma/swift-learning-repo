@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TodoModel: Encodable {
+struct TodoModel: Codable {
     var title: String
     var done: Bool
     

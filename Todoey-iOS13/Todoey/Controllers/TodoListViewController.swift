@@ -14,11 +14,10 @@ class TodoListViewController: UITableViewController {
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        loadData()
     }
     
     //MARK: - Tableview  Datasource Methods
@@ -58,7 +57,7 @@ class TodoListViewController: UITableViewController {
             let todo = TodoModel(title: textField?.text ?? "", done: false)
             
             todos.append(todo)
-        
+            
             saveData()
             
         }
@@ -76,19 +75,33 @@ class TodoListViewController: UITableViewController {
         present(alert, animated: true)
     }
     
+    //MARK: - Data Manipulation Methods
+    
     func saveData() {
         do {
             let encoder = PropertyListEncoder()
             
             let encodedData = try encoder.encode(todos)
             
-            if let uri = dataFilePath {
-                try encodedData.write(to: uri)
+            if let filePath = dataFilePath {
+                try encodedData.write(to: filePath)
             }
             
             tableView.reloadData()
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    func loadData() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            
+            do {
+                todos = try decoder.decode([TodoModel].self, from: data)
+            } catch {
+                print("Error decoding data: \(error)")
+            }
         }
     }
     
