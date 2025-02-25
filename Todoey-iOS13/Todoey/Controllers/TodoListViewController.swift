@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class TodoListViewController: UITableViewController {
     
-    var todos: [TodoModel] = [TodoModel]()
+    var todos: [TodoEntity] = [TodoEntity]()
     
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +21,8 @@ class TodoListViewController: UITableViewController {
         loadData()
     }
     
-    //MARK: - Tableview  Datasource Methods
+    //MARK: - Tableview Datasource Methods
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todos.count
     }
@@ -37,9 +39,9 @@ class TodoListViewController: UITableViewController {
         return cell
     }
     
-    //MARK: - Tableview Delegate Methods
+    //MARK: - Tableview Delegate Methods : Did Select Row
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         todos[indexPath.row].done = todos[indexPath.row].done == true ? false : true
         
         saveData()
@@ -47,64 +49,111 @@ class TodoListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    //MARK: - Add New Item
-    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        var textField: UITextField?
-        
-        let alert = UIAlertController(title: "Add New Todo", message: nil, preferredStyle: .alert)
-        
-        let action = UIAlertAction(title: "Add Todo", style: .default) { [self] (_) in
-            let todo = TodoModel(title: textField?.text ?? "", done: false)
+    
+    //MARK: - Handle Swipe Delete and Update Todo
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, completion) in
+            showDeleteTodoDialog(id: indexPath.row)
             
-            todos.append(todo)
+            completion(true)
+        }
+        
+        let update = UIContextualAction(style: .normal, title: "Edit" ) {[self] (action, view, completion) in
+            showUpateTodoDialog(id: indexPath.row)
+            
+            completion(true)
+        }
+        
+        update.backgroundColor = .systemYellow
+        
+        return UISwipeActionsConfiguration(actions: [delete, update])
+    }
+    
+    
+    //MARK: - Handle Create Todo
+    
+    @IBAction func createTodoButtonPressed(_ sender: UIBarButtonItem) {
+        showCreateTodoDialog()
+    }
+    
+    //MARK: - Dialog Add, Update, & Delete Todo
+    
+    func showCreateTodoDialog() {
+        showDialogWithTextField(title: "Create Todo", message: "Create new entries in todo list", actionLabel: "Add", placeholder: "Todo title", onSubmit: {
+            [self] submitText in
+            
+            let newTodo = TodoEntity(context: context)
+            
+            newTodo.title = submitText
+            
+            newTodo.done = false
+            
+            self.saveData()
+        })
+    }
+    
+    func showUpateTodoDialog(id index: Int) {
+        showDialogWithTextField(title: "Update Todo \(todos[index].title ?? "")", message: "Update current selected todo", actionLabel: "Update", placeholder: "Update Todo Name") {
+            [self] submitText in
+            
+            todos[index].title = submitText
             
             saveData()
-            
         }
-        
-        alert.addTextField() {
-            alertTextField in
-            
-            alertTextField.placeholder = "Enter your todo"
-            
-            textField = alertTextField
+    }
+    
+    func showDeleteTodoDialog(id index: Int) {
+        showConfirmationDialog(title: "Delete Todo \(todos[index].title ?? "")", message: "Are you sure you want to delete todo?", confirmTitle: "Delete") { [self] (confirm) in
+            if confirm {
+                context.delete(todos[index])
+                
+                saveData()
+            }
         }
-        
-        alert.addAction(action)
-        
-        present(alert, animated: true)
     }
     
     //MARK: - Data Manipulation Methods
     
     func saveData() {
         do {
-            let encoder = PropertyListEncoder()
+            try context.save()
             
-            let encodedData = try encoder.encode(todos)
-            
-            if let filePath = dataFilePath {
-                try encodedData.write(to: filePath)
-            }
+            loadData()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func loadData(_ request: NSFetchRequest<TodoEntity> = TodoEntity.fetchRequest()) {
+        do {
+            todos = try context.fetch(request)
             
             tableView.reloadData()
         } catch {
             print(error.localizedDescription)
         }
     }
-    
-    func loadData() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            
-            do {
-                todos = try decoder.decode([TodoModel].self, from: data)
-            } catch {
-                print("Error decoding data: \(error)")
-            }
-        }
-    }
-    
 }
 
+//MARK: - Search Bar Delegate Method
 
+extension TodoListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if(searchText.count == 0) {
+            loadData()
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        } else {
+            let request: NSFetchRequest<TodoEntity> = TodoEntity.fetchRequest()
+            
+            request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+            
+            request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+            
+            loadData(request)
+        }
+    }
+}

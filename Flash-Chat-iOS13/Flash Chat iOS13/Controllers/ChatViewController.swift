@@ -40,7 +40,6 @@ class ChatViewController: UIViewController {
         
         messageTextfield.delegate = self
         
-        
         loadMessages()
         
         listenForNewMessages()

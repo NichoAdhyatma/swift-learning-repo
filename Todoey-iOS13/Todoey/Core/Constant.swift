@@ -8,4 +8,8 @@
 
 struct Constant {
     static let todoCellIdentified = "TodoItemCell"
+    static let categoryCellIdentified = "CategoryItemCell"
+    static let coreDataName = "DataModel"
+    static let goToItemsSegueIdentifier = "goToItems"
+    
 }
