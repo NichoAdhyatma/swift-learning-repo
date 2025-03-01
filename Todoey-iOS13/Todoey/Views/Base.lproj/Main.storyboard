@@ -96,15 +96,49 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="h8G-u6-XoF" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="OlQ-z7-hRS">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" backIndicatorImage="arrow.backward" catalog="system" id="OlQ-z7-hRS">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" systemColor="linkColor"/>
-                        <color key="barTintColor" systemColor="tintColor"/>
+                        <color key="backgroundColor" systemColor="tintColor"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                             <color key="textColor" systemColor="systemBackgroundColor"/>
                         </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <textAttributes key="titleTextAttributes">
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                            <barButtonItemAppearance key="buttonAppearance">
+                                <barButtonItemStateAppearance key="normal">
+                                    <textAttributes key="titleTextAttributes">
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </textAttributes>
+                                </barButtonItemStateAppearance>
+                                <barButtonItemStateAppearance key="highlighted"/>
+                                <barButtonItemStateAppearance key="disabled"/>
+                                <barButtonItemStateAppearance key="focused"/>
+                            </barButtonItemAppearance>
+                            <barButtonItemAppearance key="backButtonAppearance">
+                                <barButtonItemStateAppearance key="normal">
+                                    <textAttributes key="titleTextAttributes">
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </textAttributes>
+                                </barButtonItemStateAppearance>
+                                <barButtonItemStateAppearance key="highlighted"/>
+                                <barButtonItemStateAppearance key="disabled"/>
+                                <barButtonItemStateAppearance key="focused"/>
+                            </barButtonItemAppearance>
+                        </navigationBarAppearance>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -117,14 +151,12 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <image name="arrow.backward" catalog="system" width="128" height="95"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -22,12 +22,15 @@ extension UIViewController {
         }
         
         alert.addAction(confirmAction)
+        
         alert.addAction(cancelAction)
+        
+        alert.dismiss(animated: true)
         
         present(alert, animated: true)
     }
     
-    func showDialogWithTextField(title: String?,message: String?,actionLabel: String?, placeholder: String? = nil, onSubmit: @escaping (String) -> Void) {
+    func showDialogWithTextField(title: String?,message: String?,actionLabel: String?, placeholder: String? = nil,  defaultValue: String? = nil, onSubmit: @escaping (String) -> Void) {
         var textField: UITextField?
         
         let alert = DismissibleAlertController(title: title, message: message, preferredStyle: .alert)
@@ -36,16 +39,30 @@ extension UIViewController {
         alert.addTextField() { alertTextField in
             alertTextField.placeholder = placeholder
             
+            alertTextField.text = defaultValue
+            
             textField = alertTextField
         }
         
         let action = UIAlertAction(title: actionLabel, style: .default) { _ in
             if let safeText = textField?.text {
-                onSubmit(safeText)
+                if safeText.replacingOccurrences(of: " ", with: "").count > 0 {
+                    onSubmit(safeText)
+                } else {
+                    let errorAlert = DismissibleAlertController(title: "Error", message: "Please enter a value.", preferredStyle: .alert)
+                    
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    
+                    errorAlert.dismiss(animated: true)
+                    
+                    self.present(errorAlert, animated: true)
+                }
             }
         }
         
         alert.addAction(action)
+        
+        alert.dismiss(animated: true)
         
         present(alert, animated: true)
     }

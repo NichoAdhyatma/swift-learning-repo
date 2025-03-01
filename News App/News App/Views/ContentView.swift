@@ -24,7 +24,7 @@ struct ContentView: View {
                         Text(post.url ?? "").font(.subheadline).foregroundColor(.blue).lineLimit(1).underline(true, color: .blue)
                     }
                 }
-               
+                
                 
             }).navigationTitle("News App")
         }.onAppear() {

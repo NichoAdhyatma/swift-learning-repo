@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6910C1C32D6E121F00A5CFE5 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6910C1C22D6E121700A5CFE5 /* CoreDataManager.swift */; };
 		694999B92D64D3D8003C367F /* DissmissalbelAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694999B82D64D3D3003C367F /* DissmissalbelAlert.swift */; };
 		694999BB2D64D408003C367F /* ConfirmationDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694999BA2D64D402003C367F /* ConfirmationDialog.swift */; };
 		699B68FA2D6CB091001F6A05 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699B68F92D6CB091001F6A05 /* CategoryViewController.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6910C1C22D6E121700A5CFE5 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		694999B82D64D3D3003C367F /* DissmissalbelAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DissmissalbelAlert.swift; sourceTree = "<group>"; };
 		694999BA2D64D402003C367F /* ConfirmationDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationDialog.swift; sourceTree = "<group>"; };
 		699B68F92D6CB091001F6A05 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6910C1C12D6E120F00A5CFE5 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				6910C1C22D6E121700A5CFE5 /* CoreDataManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		694999B72D64D3C6003C367F /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +113,7 @@
 		EB2BE4F8239524DB00FB933B /* Todoey */ = {
 			isa = PBXGroup;
 			children = (
+				6910C1C12D6E120F00A5CFE5 /* Manager */,
 				694999B72D64D3C6003C367F /* UI */,
 				69FB891D2D589A3000DC2A7C /* Core */,
 				69FB891C2D589A1C00DC2A7C /* Views */,
@@ -196,6 +207,7 @@
 				694999B92D64D3D8003C367F /* DissmissalbelAlert.swift in Sources */,
 				699B68FA2D6CB091001F6A05 /* CategoryViewController.swift in Sources */,
 				69FB89202D589A5D00DC2A7C /* TodoModel.swift in Sources */,
+				6910C1C32D6E121F00A5CFE5 /* CoreDataManager.swift in Sources */,
 				EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */,
 				694999BB2D64D408003C367F /* ConfirmationDialog.swift in Sources */,
 			);
